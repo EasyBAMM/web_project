@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="/css/mypage.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="section1">
+            <header>
+                <p class="section1-title">MY PAGE</p>
+            </header>
+        </div>
+            <main>
+                <div class="self">
+                    <form action="/action_page.php">
+                      <label for="fname">Name</label>
+                      <input type="text" id="fname" name="firstname" placeholder="name..">
+                  
+                      <label for="gender">Gender</label>
+                      <select id="gen" name="gender">
+                        <option value="male">male</option>
+                        <option value="female">female</option>
+                      </select>
+                      <label for="birth">Birth</label><br>
+                      <input type="date" id="birth" name="Birthday" placeholder="Birth"><br><br>
+
+                      <label for="mail">E-mail</label>
+                      <input type="text" id="mail" name="email" placeholder="e-mail..">
+
+                      <label for="phone">Phone</label>
+                      <input type="text" id="phone" name="pn" placeholder="phone number..">
+
+                      <label for="introduce">Self-introduction</label>
+                      <input type="text" id="introduce" name="me" placeholder="let me introduce myself" style="height: 300px;">
+                  
+                      <input type="submit" value="Save">
+                    </form>
+                  </div>
+            </main>
+        <div class="section3">
+            <footer>
+
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

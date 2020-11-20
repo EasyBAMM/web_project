@@ -4,12 +4,11 @@ var router = express.Router();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var bcrypt = require('bcrypt');
-var passport = require('passport');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
 
 const users = []
+const enterprises = [];
 var isWrong = false;
 var mainName = null;
 
@@ -58,17 +57,30 @@ app.post('/login', function(req, res, next) {
   var name = req.body.name;
   var password = req.body.password;
   var dbType = req.body.DB_Type;
-  console.log(users.name);
 
-  for(i=0;i<users.length;i++) {
-    if(name === users[i].name && password === users[i].password){
-      // success!
-      session.is_logined = true;
-      session.name = req.body.name;
-      mainName = req.body.name;
-      res.redirect('/');
+  if(dbType === "type1") {
+    for(i=0;i<users.length;i++) {
+      if(name === users[i].name && password === users[i].password){
+        // success!
+        session.is_logined = true;
+        session.name = req.body.name;
+        mainName = req.body.name;
+        res.redirect('/');
+      }
     }
   }
+  else if(dbType === "type2") {
+    for(i=0;i<enterprises.length;i++) {
+      if(name === enterprises[i].name && password === enterprises[i].password){
+        // success!
+        session.is_logined = true;
+        session.name = req.body.name;
+        mainName = req.body.name;
+        res.redirect('/');
+      }
+    }
+  }
+  
   // wrong!
   isWrong = true;
   res.redirect('/login');
@@ -82,15 +94,23 @@ app.get('/register', function(req, res, next) {
 /* GET register page. */
 app.post('/register', function(req, res, next) {
   try {
-    users.push({
-      name: req.body.name,
-      password: req.body.password
-    })
+    if(req.body.DB_Type === "type1") {
+      users.push({
+        name: req.body.name,
+        password: req.body.password
+      })
+    }
+    else if(req.body.DB_Type === "type2") {
+      enterprises.push({
+        name: req.body.name,
+        password: req.body.password
+      })
+    }
+    
     res.redirect('/login');
   } catch {
     res.redirect('/register');
   }
-  console.log(users);
 });
 
 /* GET enterprise page. */
@@ -101,6 +121,11 @@ app.get('/enterprise', function(req, res, next) {
 /* GET enterprise-detail page. */
 app.get('/enterprise-detail', function(req, res, next) {
   res.render('enterprise-detail', { title: 'Express' });
+});
+
+/* GET mypage page. */
+app.get('/mypage', function(req, res, next) {
+  res.render('mypage', { title: 'Express' });
 });
 
 

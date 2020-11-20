@@ -8,6 +8,14 @@
 <body>
     <h1>Register</h1>
     <form action="/register" method="POST">
+        <div class="type">
+            <input type="radio" id="DB_Type1" name="DB_Type" value="type1" required>
+            <label for="DB_Type1">개인회원</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" id="DB_Type2" name="DB_Type" value="type2">
+            <label for="DB_Type2">기업회원</label><br>
+            <br>
+        </div>
         <div>
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
