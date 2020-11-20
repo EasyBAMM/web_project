@@ -1,0 +1,10 @@
+<% for(var i = 0; i < enterList.length/3; i++){ %>
+<div class="cmp-list">
+  <% for(var j = i j < j+3; j++) { %>
+    <div class="cmp">
+      <img src="<%=enterpriseList[j].image%>" class="company-img">
+      <p class="company-name"><%=enterList[j].title%></p>
+    </div>
+    <% } %>
+</div> 
+<% } %>

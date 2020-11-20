@@ -9,8 +9,18 @@ var FileStore = require('session-file-store')(session);
 
 const users = []
 const enterprises = [];
+const enterList = [
+  {
+    title: "kakao 채용공고",
+    image: "/img/Kakao.png"
+  },
+  {
+    title: "hanwha 채용공고",
+    image: "/img/hanwha.png",
+  }
+]
 var isWrong = false;
-var mainName = null;
+var isWrongText = "";
 
 /*
 var indexRouter = require('./routes/index');
@@ -39,29 +49,24 @@ app.use(session({
 
 /* GET home page. */
 app.get('/', function(req, res, next) {
-  if(session.is_logined) {
+  if(req.session.is_logined) {
     // login-on
-    if(session.is_type) {
-      res.render('main', { name: mainName, sign: "Log-out", direct: "/mypage" });
+    if(req.session.is_type) {
+      res.render('main', { name: req.session.name, signLink:"/logout", sign: "Log-out", direct: "/mypage", enterList: enterList });
     }
     else {
-      res.render('main', { name: mainName, sign: "Log-out", direct: "/enterprise" });
+      res.render('main', { name: req.session.name, signLink:"/logout", sign: "Log-out", direct: "/enterprise", enterList: enterList });
     }
   }
   else {
     // login-off
-    res.render('main', { name: mainName, sign: "Log-in", direct:"" });
+    res.render('main', { name: "", signLink:"/login", sign: "Log-in", direct:"", enterList: enterList });
   }
 });
 
 /* GET login page. */
 app.get('/login', function(req, res, next) {
-  if(session.is_logined) {
-    session.is_logined = false;
-    mainName = null;
-    res.redirect('/');
-  }
-  res.render('login', { message: isWrong, text:"비밀번호가 틀렸습니다." });
+  res.render('login', { message: isWrong, text: isWrongText });
 });
 
 /* GET login_process page. */
@@ -74,11 +79,13 @@ app.post('/login', function(req, res, next) {
     for(i=0;i<users.length;i++) {
       if(name === users[i].name && password === users[i].password){
         // success!
-        session.is_logined = true;
-        session.is_type = true;
-        session.name = req.body.name;
-        mainName = req.body.name;
-        res.redirect('/');
+        req.session.is_logined = true;
+        req.session.is_type = true;
+        req.session.name = req.body.name;
+        req.session.save(function(){
+          res.redirect('/');
+        });
+        return true;
       }
     }
   }
@@ -86,18 +93,28 @@ app.post('/login', function(req, res, next) {
     for(i=0;i<enterprises.length;i++) {
       if(name === enterprises[i].name && password === enterprises[i].password){
         // success!
-        session.is_logined = true;
-        session.is_type = false;
-        session.name = req.body.name;
-        mainName = req.body.name;
-        res.redirect('/');
+        req.session.is_logined = true;
+        req.session.is_type = false;
+        req.session.name = req.body.name;
+        req.session.save(function(){
+          res.redirect('/');
+        });
+        return true;
       }
     }
   }
   
   // wrong!
   isWrong = true;
+  isWrongText = "잘못된 정보가 입력되었습니다.";
   res.redirect('/login');
+});
+
+/* GET logout page. */
+app.get('/logout', function(req, res, next) {
+  req.session.destroy(function(err){
+    res.redirect('/');
+  });
 });
 
 /* GET register page. */
@@ -121,6 +138,7 @@ app.post('/register', function(req, res, next) {
       })
     }
     
+    isWrongText = "다시 로그인해주세요.";
     res.redirect('/login');
   } catch {
     res.redirect('/register');
@@ -129,7 +147,12 @@ app.post('/register', function(req, res, next) {
 
 /* GET enterprise page. */
 app.get('/enterprise', function(req, res, next) {
-  res.render('enterprise', { title: 'Express' });
+  if(req.session.is_logined) {
+    res.render('enterprise', { title: 'Express' });
+  }
+  else {
+    res.redirect('/');
+  }
 });
 
 /* GET enterprise-detail page. */
@@ -139,7 +162,12 @@ app.get('/enterprise-detail', function(req, res, next) {
 
 /* GET mypage page. */
 app.get('/mypage', function(req, res, next) {
-  res.render('mypage', { title: 'Express' });
+  if(req.session.is_logined) {
+    res.render('mypage', { title: 'Express' });
+  }
+  else {
+    res.redirect('/');
+  }
 });
 
 
