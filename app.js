@@ -40,15 +40,27 @@ app.use(session({
 /* GET home page. */
 app.get('/', function(req, res, next) {
   if(session.is_logined) {
-    res.render('main', { name: mainName, sign: "Log-out" });
+    // login-on
+    if(session.is_type) {
+      res.render('main', { name: mainName, sign: "Log-out", direct: "/mypage" });
+    }
+    else {
+      res.render('main', { name: mainName, sign: "Log-out", direct: "/enterprise" });
+    }
   }
   else {
-    res.render('main', { name: mainName, sign: "Log-in" });
+    // login-off
+    res.render('main', { name: mainName, sign: "Log-in", direct:"" });
   }
 });
 
 /* GET login page. */
 app.get('/login', function(req, res, next) {
+  if(session.is_logined) {
+    session.is_logined = false;
+    mainName = null;
+    res.redirect('/');
+  }
   res.render('login', { message: isWrong, text:"비밀번호가 틀렸습니다." });
 });
 
@@ -63,6 +75,7 @@ app.post('/login', function(req, res, next) {
       if(name === users[i].name && password === users[i].password){
         // success!
         session.is_logined = true;
+        session.is_type = true;
         session.name = req.body.name;
         mainName = req.body.name;
         res.redirect('/');
@@ -74,6 +87,7 @@ app.post('/login', function(req, res, next) {
       if(name === enterprises[i].name && password === enterprises[i].password){
         // success!
         session.is_logined = true;
+        session.is_type = false;
         session.name = req.body.name;
         mainName = req.body.name;
         res.redirect('/');
