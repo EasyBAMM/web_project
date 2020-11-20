@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채용 공고 등록페이지</title>
     <link rel="stylesheet" href="/css/enterprise.css">
+    <script src="/javascripts/enterprise.js"></script>
 </head>
 
 <body>
@@ -17,108 +18,108 @@
         </div>
         <div class="section2">
             <main>
-                <form class="form-wrap" action="">
+                <form class="form-wrap" action="/enterprise" method="POST" enctype="multipart/form-data">
                     <div class="form-left">
                         <div class="form-left-in">
-                            <label for="banner-image">ㆍ배너 이미지:</label>
-                            <input type="file" id="banner-image" name="banner-image" accept="image/jpeg" required>
+                            <label for="image">ㆍ배너 이미지:</label>
+                            <input type="file" id="image" name="image" accept="image/jpeg" required>
                         </div>
                         <div class="form-left-in">
-                            <label for="enterprise-name">ㆍ회사명:</label>
-                            <input type="text" id="enterprise-name" name="enterprise-name" required minlength="1"
+                            <label for="enterpriseName">ㆍ회사명:</label>
+                            <input type="text" id="enterpriseName" name="enterpriseName" required minlength="1"
                                 maxlength="20" size="50" placeholder="ex) (주)컴투스">
                         </div>
                         <div class="form-left-in">
-                            <label for="enterprise-title">ㆍ제목:</label>
-                            <input type="text" id="enterprise-title" name="enterprise-title" required minlength="1"
+                            <label for="enterpriseTitle">ㆍ제목:</label>
+                            <input type="text" id="enterpriseTitle" name="enterpriseTitle" required minlength="1"
                                 maxlength="20" size="50" placeholder="ex) 2020 게임빌 신입 공개채용">
                         </div>
                         <div class="form-left-in">
-                            <label for="enterprise-qualification">ㆍ지원자격:</label>
+                            <label for="enterpriseQualification">ㆍ지원자격:</label>
                         </div>
                         <div class="form-left-in form-left-small">
-                            <input type="checkbox" id="enterprise-qualification-new" name="enterprise-qualification-new"
-                                value="new">
+                            <input type="checkbox" id="enterpriseQualificationNew" name="enterpriseQualificationNew"
+                                value="신입" checked>
                             <label class="label-check" for="vehicle1"> 신입</label><br>
-                            <input type="checkbox" id="enterprise-qualification-old" name="enterprise-qualification-old"
-                                value="old">
+                            <input type="checkbox" id="enterpriseQualificationOld" name="enterpriseQualificationOld"
+                                value="경력">
                             <label class="label-check" for="vehicle2"> 경력</label><br>
-                            <select name="enterprise-qualification-graduate">
+                            <select name="enterpriseQualificationGraduate">
                                 <option value="">최종학력선택</option>
-                                <option value="학생">전문대졸이상</option>
-                                <option value="회사원" selected>대졸이상(졸업예정자가능)</option>
-                                <option value="기타">학ㆍ석사이상</option>
+                                <option value="전문대졸이상">전문대졸이상</option>
+                                <option value="대졸이상(졸업예정자가능)" selected>대졸이상(졸업예정자가능)</option>
+                                <option value="학ㆍ석사이상">학ㆍ석사이상</option>
                             </select>
                         </div>
                         <div class="form-left-in">
-                            <label for="enterprise-quality">ㆍ근무조건</label><br>
+                            <label for="enterpriseQuality">ㆍ근무조건</label><br>
                         </div>
                         <div class="form-left-in form-left-small">
-                            <label for="enterprise-hired">1. 고용형태:</label>
-                            <select name="enterprise-hired">
+                            <label for="enterpriseHired">1. 고용형태:</label>
+                            <select name="enterpriseHired">
                                 <option value="">고용형태선택</option>
-                                <option value="학생">정규직</option>
-                                <option value="회사원" selected>계약직</option>
-                                <option value="기타">일용직</option>
+                                <option value="정규직">정규직</option>
+                                <option value="계약직" selected>계약직</option>
+                                <option value="일용직">일용직</option>
                             </select>
                         </div>
                         <div class="form-left-in form-left-small">
-                            <label for="enterprise-money">2. 급여:</label>
-                            <input type="text" id="enterprise-money" name="enterprise-money" required minlength="1"
+                            <label for="enterprisemoney">2. 급여:</label>
+                            <input type="text" id="enterpriseMoney" name="enterpriseMoney" required minlength="1"
                                 maxlength="20" size="50" placeholder="ex) 회사내규에따름">
                         </div>
                         <div class="form-left-in form-left-small">
-                            <label for="enterprise-location">3. 지역:</label>
-                            <input type="text" id="enterprise-money" name="enterprise-money" required minlength="1"
+                            <label for="enterpriseLocation">3. 지역:</label>
+                            <input type="text" id="enterpriseLocation" name="enterpriseLocation" required minlength="1"
                                 maxlength="20" size="50" placeholder="ex) 서울시 양천구">
                         </div>
                         <div class="form-left-in form-left-small">
-                            <label for="enterprise-time">4. 시간:</label>
-                            <input type="text" id="enterprise-time" name="enterprise-time" required minlength="1"
+                            <label for="enterpriseTime">4. 시간:</label>
+                            <input type="text" id="enterpriseTime" name="enterpriseTime" required minlength="1"
                                 maxlength="20" size="50" placeholder="ex) 주5일(월~금)선택적 근로시간제 운영">
                         </div>
                     </div>
                     <div class="form-right">
                         <div class="form-right-in">
-                            <label for="enterprise-detail-img">ㆍ상세요강:</label>
-                            <input type="file" id="enterprise-detail-img" name="enterprise-detail-img"
+                            <label for="enterpriseDetailImg">ㆍ상세요강:</label>
+                            <input type="file" id="enterpriseDetailImg" name="enterpriseDetailImg"
                                 accept="image/jpeg" required>
                         </div>
                         <div class="form-right-in">
-                            <label for="enterprise-detail-option">ㆍ자소서항목:</label><br>
+                            <label for="enterpriseDetailOption">ㆍ자소서항목:</label><br>
                         </div>
                         <div class="form-right-in form-right-small">
-                            <textarea id="enterprise-detail-option" name="enterprise-detail-option" cols="70" rows="10"
+                            <textarea id="enterpriseDetailOption" name="enterpriseDetailOption" cols="70" rows="10"
                                 placeholder=" 1. 희망 직무를 지원한 이유와 해당 직무를 수행하기 위해 어떠한 노력이나 경험을 하였는지 작성해주세요.(1000자 이내)
  2. 타인과의 협업 과정에서 겪은 갈등과 이를 해결하기 위해 어떤 노력을 하였는지 구체적으로 작성해주세요. (1000자 이내)
  3.  주어진 일이나 과제 수행 시 새로운 것을 접목하거나 남다른 아이디어를 통해 문제를 개선했던 경험에 대해 작성해주세요. (800자 이내) "></textarea>
                         </div>
                         <div class="form-right-in">
-                            <label for="enterprise-information">ㆍ기업정보</label>
+                            <label for="enterpriseInformation">ㆍ기업정보</label>
                         </div>
                         <div class="form-right-in form-right-small">
-                            <label for="enterprise-information1">1. 산업:</label>
-                            <input type="text" id="enterprise-information1" name="enterprise-information1" required
+                            <label for="enterpriseInformation1">1. 산업:</label>
+                            <input type="text" id="enterpriseInformation1" name="enterpriseInformation1" required
                                 minlength="1" maxlength="20" size="50" placeholder="ex) 게임ㆍ애니메이션">
                         </div>
                         <div class="form-right-in form-right-small">
-                            <label for="enterprise-information2">2. 설립:</label>
-                            <input type="text" id="enterprise-information2" name="enterprise-information2" required
+                            <label for="enterpriseInformation2">2. 설립:</label>
+                            <input type="text" id="enterpriseInformation2" name="enterpriseInformation2" required
                                 minlength="1" maxlength="20" size="50" placeholder="ex) 1988년">
                         </div>
                         <div class="form-right-in form-right-small">
-                            <label for="enterprise-information3">3. 사원수:</label>
-                            <input type="text" id="enterprise-information3" name="enterprise-information3" required
+                            <label for="enterpriseInformation3">3. 사원수:</label>
+                            <input type="text" id="enterpriseInformation3" name="enterpriseInformation3" required
                                 minlength="1" maxlength="20" size="50" placeholder="ex) 1025명">
                         </div>
                         <div class="form-right-in form-right-small">
-                            <label for="enterprise-information4">4. 기업형태:</label>
-                            <input type="text" id="enterprise-information4" name="enterprise-information4" required
+                            <label for="enterpriseInformation4">4. 기업형태:</label>
+                            <input type="text" id="enterpriseInformation4" name="enterpriseInformation4" required
                                 minlength="1" maxlength="20" size="50" placeholder="ex) 중견기업">
                         </div>
                         <div class="form-right-in form-right-small">
-                            <label for="enterprise-information5">5. 매출액:</label>
-                            <input type="text" id="enterprise-information5" name="enterprise-information5" required
+                            <label for="enterpriseInformation5">5. 매출액:</label>
+                            <input type="text" id="enterpriseInformation5" name="enterpriseInformation5" required
                                 minlength="1" maxlength="20" size="50" placeholder="ex) 5080억">
                         </div>
                         <div class="form-right-in form-right-buttons">
