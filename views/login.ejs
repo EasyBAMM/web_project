@@ -9,7 +9,12 @@
 <body>
     <section class="login-form">
         <h1>"SITE TITLE"</h1>
-        <form action="">
+        <h3>
+            <% if(message) { %>
+                <%= text  %>
+            <% } %>
+        </h3>
+        <form action="login" method="POST">
             <div class="type">
                 <input type="radio" id="DB_Type1" name="DB_Type" value="ee">
                 <label for="DB_Type1">개인회원</label>
@@ -19,17 +24,17 @@
                 <br>
             </div>
             <div class="login">
-                <label for="id">ID</label><input type="text" name="id" id="id">
+                <label for="id">ID</label><input type="text" name="name" id="name">
             </div>
             <div class="login">
-                <label for="pw">PASSWORD</label><input type="password" name="pw" id="pw">
+                <label for="pw">PASSWORD</label><input type="password" name="password" id="password">
             </div>
             <p class="btn">
                 <button type="submit">LOGIN</button>
             </p>
         </form>
         <div class="find">
-            <a href="">ID/PASSWORD 찾기</a>
+            <a href="register">ID/PASSWORD 등록</a>
             
         </div>
     </section>
