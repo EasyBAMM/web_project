@@ -80,7 +80,7 @@ https://templatemo.com/tm-529-ramayana
                     <div class="cmp-list">
                     <% for (var i=0;i<enterList.length; i++) { %>
                       <div class="cmp">
-                        <img src=<%= enterList[i].image %> class="company-img">
+                        <a href="/enterprise-detail/<%= enterList[i].id %>"><img src=<%= enterList[i].image %> class="company-img"></a>
                         <p class="company-name"><%= enterList[i].enterpriseTitle %></p>
                       </div>
                     <% } %>

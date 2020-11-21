@@ -17,16 +17,51 @@ var _storage = multer.diskStorage({
 });
 var upload = multer({storage: _storage})
 
+var countId = 2;
 const users = []
 const enterprises = [];
 const enterList = [
   {
+    enterpriseName: '(주)카카오',
     enterpriseTitle: "kakao 채용공고",
+    enterpriseQualificationAge: '신입',
+    enterpriseQualificationGraduate: '대졸이상(졸업예정자가능)',
+    enterpriseHired: '계약직',
+    enterpriseMoney: '회사내규에따름',
+    enterpriseLocation: '서울시 서초구',
+    enterpriseTime: '주5일(월~금)',
+    enterpriseDetailOption: '1. 지원동기 2. 성장과정',
+    enterpriseInformation1: '앱 서비스 개발',
+    enterpriseInformation2: '2010년',
+    enterpriseInformation3: '10024명',
+    enterpriseInformation4: 'IT대기업',
+    enterpriseInformation5: '1조8000억',
+    name: '456',
+    password: '456',
     image: "/img/Kakao.png",
+    enterpriseDetailImg: '/img/capture.png',
+    id: 0,
   },
   {
+    enterpriseName: '(주)한화',
     enterpriseTitle: "hanwha 채용공고",
+    enterpriseQualificationAge: '신입',
+    enterpriseQualificationGraduate: '대졸이상(졸업예정자가능)',
+    enterpriseHired: '일용직',
+    enterpriseMoney: '회사내규에 따름',
+    enterpriseLocation: '서울시 양천구',
+    enterpriseTime: '주5일(월~금)',
+    enterpriseDetailOption: '1. 지원동기 2. 성장과정',
+    enterpriseInformation1: '게임 애니메이션',
+    enterpriseInformation2: '1988년',
+    enterpriseInformation3: '1025명',
+    enterpriseInformation4: '중견기업',
+    enterpriseInformation5: '5080억',
+    name: '644',
+    password: '636',
     image: "/img/hanwha.png",
+    enterpriseDetailImg: '/img/capture.png',
+    id: 1,
   }
 ]
 var isWrong = false;
@@ -174,7 +209,8 @@ app.post('/enterprise', upload.fields([{name:'image'}, {name:'enterpriseDetailIm
   obj.password = req.session.password;
   obj.image = "/img/" + req.files['image'][0].filename;
   obj.enterpriseDetailImg = "/img/" + req.files['enterpriseDetailImg'][0].filename;
-  
+  obj.id = countId;
+  countId+=1;
   try{
     enterList.push(obj);
     console.log(enterList);
@@ -185,8 +221,13 @@ app.post('/enterprise', upload.fields([{name:'image'}, {name:'enterpriseDetailIm
 });
 
 /* GET enterprise-detail page. */
-app.get('/enterprise-detail', function(req, res, next) {
-  res.render('enterprise-detail', { title: 'Express' });
+app.get('/enterprise-detail/:id', function(req, res, next) {
+  for(var i=0;i<enterList.length;i++) {
+    if(enterList[i].id == req.params.id) {
+      return res.render('enterprise-detail', {enterList: enterList[i]});
+    }
+  }
+  res.redirect('/');
 });
 
 /* GET mypage page. */
