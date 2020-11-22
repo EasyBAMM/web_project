@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>채용 공고 등록페이지</title>
+    <title>채용 공고 등록 수정페이지</title>
     <link rel="stylesheet" href="/css/enterprise.css">
     <script src="/javascripts/enterprise.js"></script>
 </head>
@@ -13,12 +13,12 @@
     <div class="container">
         <div class="section1">
             <header>
-                <p class="section1-title">채용정보등록</p>
+                <p class="section1-title">채용정보등록 수정</p>
             </header>
         </div>
         <div class="section2">
             <main>
-                <form class="form-wrap" action="/enterprise" method="POST" enctype="multipart/form-data">
+                <form class="form-wrap" action="/enterprise-updating" method="POST" enctype="multipart/form-data">
                     <div class="form-left">
                         <div class="form-left-in">
                             <label for="image">ㆍ배너 이미지:</label>
@@ -27,12 +27,12 @@
                         <div class="form-left-in">
                             <label for="enterpriseName">ㆍ회사명:</label>
                             <input type="text" id="enterpriseName" name="enterpriseName" required minlength="1"
-                                maxlength="20" size="50" placeholder="ex) (주)컴투스">
+                                maxlength="20" size="50" placeholder="ex) (주)컴투스" value="<%= enterList.enterpriseName %>">
                         </div>
                         <div class="form-left-in">
                             <label for="enterpriseTitle">ㆍ제목:</label>
                             <input type="text" id="enterpriseTitle" name="enterpriseTitle" required minlength="1"
-                                maxlength="20" size="50" placeholder="ex) 2020 게임빌 신입 공개채용">
+                                maxlength="20" size="50" placeholder="ex) 2020 게임빌 신입 공개채용" value="<%= enterList.enterpriseTitle %>">
                         </div>
                         <div class="form-left-in">
                             <label for="enterpriseQualification">ㆍ지원자격:</label>
@@ -66,17 +66,17 @@
                         <div class="form-left-in form-left-small">
                             <label for="enterprisemoney">2. 급여:</label>
                             <input type="text" id="enterpriseMoney" name="enterpriseMoney" required minlength="1"
-                                maxlength="20" size="50" placeholder="ex) 회사내규에따름">
+                                maxlength="20" size="50" placeholder="ex) 회사내규에따름" value="<%= enterList.enterpriseMoney %>">
                         </div>
                         <div class="form-left-in form-left-small">
                             <label for="enterpriseLocation">3. 지역:</label>
                             <input type="text" id="enterpriseLocation" name="enterpriseLocation" required minlength="1"
-                                maxlength="20" size="50" placeholder="ex) 서울시 양천구">
+                                maxlength="20" size="50" placeholder="ex) 서울시 양천구" value="<%= enterList.enterpriseLocation %>">
                         </div>
                         <div class="form-left-in form-left-small">
                             <label for="enterpriseTime">4. 시간:</label>
                             <input type="text" id="enterpriseTime" name="enterpriseTime" required minlength="1"
-                                maxlength="20" size="50" placeholder="ex) 주5일(월~금)선택적 근로시간제 운영">
+                                maxlength="20" size="50" placeholder="ex) 주5일(월~금)선택적 근로시간제 운영" value="<%= enterList.enterpriseTime %>">
                         </div>
                     </div>
                     <div class="form-right">
@@ -92,7 +92,7 @@
                             <textarea id="enterpriseDetailOption" name="enterpriseDetailOption" cols="70" rows="10"
                                 placeholder=" 1. 희망 직무를 지원한 이유와 해당 직무를 수행하기 위해 어떠한 노력이나 경험을 하였는지 작성해주세요.(1000자 이내)
  2. 타인과의 협업 과정에서 겪은 갈등과 이를 해결하기 위해 어떤 노력을 하였는지 구체적으로 작성해주세요. (1000자 이내)
- 3.  주어진 일이나 과제 수행 시 새로운 것을 접목하거나 남다른 아이디어를 통해 문제를 개선했던 경험에 대해 작성해주세요. (800자 이내) " ></textarea>
+ 3.  주어진 일이나 과제 수행 시 새로운 것을 접목하거나 남다른 아이디어를 통해 문제를 개선했던 경험에 대해 작성해주세요. (800자 이내) "><%= enterList.enterpriseDetailOption %></textarea>
                         </div>
                         <div class="form-right-in">
                             <label for="enterpriseInformation">ㆍ기업정보</label>
@@ -100,35 +100,36 @@
                         <div class="form-right-in form-right-small">
                             <label for="enterpriseInformation1">1. 산업:</label>
                             <input type="text" id="enterpriseInformation1" name="enterpriseInformation1" required
-                                minlength="1" maxlength="20" size="50" placeholder="ex) 게임ㆍ애니메이션">
+                                minlength="1" maxlength="20" size="50" placeholder="ex) 게임ㆍ애니메이션" value="<%= enterList.enterpriseInformation1 %>">
                         </div>
                         <div class="form-right-in form-right-small">
                             <label for="enterpriseInformation2">2. 설립:</label>
                             <input type="text" id="enterpriseInformation2" name="enterpriseInformation2" required
-                                minlength="1" maxlength="20" size="50" placeholder="ex) 1988년">
+                                minlength="1" maxlength="20" size="50" placeholder="ex) 1988년" value="<%= enterList.enterpriseInformation2 %>">
                         </div>
                         <div class="form-right-in form-right-small">
                             <label for="enterpriseInformation3">3. 사원수:</label>
                             <input type="text" id="enterpriseInformation3" name="enterpriseInformation3" required
-                                minlength="1" maxlength="20" size="50" placeholder="ex) 1025명">
+                                minlength="1" maxlength="20" size="50" placeholder="ex) 1025명" value="<%= enterList.enterpriseInformation3 %>">
                         </div>
                         <div class="form-right-in form-right-small">
                             <label for="enterpriseInformation4">4. 기업형태:</label>
                             <input type="text" id="enterpriseInformation4" name="enterpriseInformation4" required
-                                minlength="1" maxlength="20" size="50" placeholder="ex) 중견기업">
+                                minlength="1" maxlength="20" size="50" placeholder="ex) 중견기업" value="<%= enterList.enterpriseInformation4 %>">
                         </div>
                         <div class="form-right-in form-right-small">
                             <label for="enterpriseInformation5">5. 매출액:</label>
                             <input type="text" id="enterpriseInformation5" name="enterpriseInformation5" required
-                                minlength="1" maxlength="20" size="50" placeholder="ex) 5080억">
+                                minlength="1" maxlength="20" size="50" placeholder="ex) 5080억" value="<%= enterList.enterpriseInformation5 %>">
                         </div>
                         <div class="form-right-in form-right-buttons">
                             <input id="button-check-applicant" type="button" value="지원자확인">
                             <input id="button-goback" type="button" value="이전으로">
-                            <input id="button-submit" type="submit" value="제출하기">
+                            <input id="button-submit" type="submit" value="수정하기">
                         </div>
 
                     </div>
+                    <input type="hidden" name="id" value="<%= enterList.id %>">
 
 
                 </form>

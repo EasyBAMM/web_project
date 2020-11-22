@@ -20,7 +20,7 @@ var upload = multer({storage: _storage})
 var countId = 2;
 const users = []
 const enterprises = [];
-const enterList = [
+var enterList = [
   {
     enterpriseName: '(주)카카오',
     enterpriseTitle: "kakao 채용공고",
@@ -224,10 +224,71 @@ app.post('/enterprise', upload.fields([{name:'image'}, {name:'enterpriseDetailIm
 app.get('/enterprise-detail/:id', function(req, res, next) {
   for(var i=0;i<enterList.length;i++) {
     if(enterList[i].id == req.params.id) {
+      req.session.current_url = '/enterprise-detail/' + req.params.id;
       return res.render('enterprise-detail', {enterList: enterList[i]});
     }
   }
   res.redirect('/');
+});
+
+
+/* POST enterprise-update page. */
+app.post('/enterprise-update/:id', function(req, res, next) {
+  if(req.session.is_logined === true && req.session.is_type === false) {
+    for(var i=0; i<enterList.length; i++) {
+      if(enterList[i].id == req.body.id && enterList[i].name == req.session.name && enterList[i].password == req.session.password) {
+          return res.render('enterprise-update', {enterList: enterList[i]});
+      }
+    }
+  }
+  res.redirect(req.session.current_url);
+});
+
+/* POST enterprise-update page. */
+app.post('/enterprise-updating', upload.fields([{name:'image'}, {name:'enterpriseDetailImg'}]), function(req, res, next) {
+  if(req.session.is_logined === true && req.session.is_type === false) {
+    for(var i=0; i<enterList.length; i++) {
+      if(enterList[i].id == req.body.id && enterList[i].name == req.session.name && enterList[i].password == req.session.password) {
+          const obj = JSON.parse(JSON.stringify(req.body));
+          obj.name = req.session.name;
+          obj.password = req.session.password;
+          obj.image = "/img/" + req.files['image'][0].filename;
+          obj.enterpriseDetailImg = "/img/" + req.files['enterpriseDetailImg'][0].filename;
+          console.log(obj);
+          try {
+            enterList[i] = obj;
+            console.log(enterList);
+            return res.redirect(req.session.current_url);
+          } catch {
+            console.log("err");
+            return res.redirect(req.session.current_url);
+          }
+      }
+    }
+  }
+  console.log("else");
+  res.redirect(req.session.current_url);
+});
+
+/* POST enterprise-delete page. */
+app.post('/enterprise-delete', function(req, res, next) {
+  if(req.session.is_logined === true && req.session.is_type === false) {
+    for(var i=0; i<enterList.length; i++) {
+      if(enterList[i].id == req.body.id && enterList[i].name == req.session.name && enterList[i].password == req.session.password) {
+          try {
+            // delete enterList[i];
+            // enterList.splice();
+            console.log(enterList);
+            return res.redirect('/');
+          } catch {
+            console.log("err");
+            return res.redirect(req.session.current_url);
+          }
+      }
+    }
+  }
+  console.log("else");
+  res.redirect(req.session.current_url);
 });
 
 /* GET mypage page. */

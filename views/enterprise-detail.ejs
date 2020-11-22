@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채용 공고 상세페이지</title>
     <link rel="stylesheet" href="/css/enterprise-detail.css">
+    <script src="/javascripts/enterprise-detail.js"></script>
 </head>
 
 <body>
@@ -13,6 +14,16 @@
         <div class="section1">
             <header>
                 <a href="/" class="header-a"><p class="section1-title">JJOPKOREA</p></a>
+                <div class="header-buttons">
+                    <form action="/enterprise-update/<%= enterList.id %>" method="POST">
+                        <input type="hidden" name="id" value=<%= enterList.id %>>
+                        <button type="submit" class="header-update">UPDATE</button>
+                    </form>
+                    <form action="/enterprise-delete" method="POST">
+                        <input type="hidden" name="id" value=<%= enterList.id %>>
+                        <button type="submit" class="header-delete">DELETE</button>
+                    </form>
+                </div>
             </header>
         </div>
         <div class="section2">
