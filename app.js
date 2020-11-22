@@ -72,7 +72,7 @@ const enterList = [
     name: "456",
     password: "456",
     image: "/img/Kakao.png",
-    enterpriseDetailImg: "/img/capture.png",
+    enterpriseDetailImg: "/img/Kakao-detail.png",
     enterpriseApplicant: [
       {
         applicantName: "sample2",
@@ -119,7 +119,7 @@ const enterList = [
     name: "789",
     password: "789",
     image: "/img/hanwha.png",
-    enterpriseDetailImg: "/img/capture.png",
+    enterpriseDetailImg: "/img/hanwha-detail.png",
     enterpriseApplicant: [
       {
         applicantName: "sample2",
