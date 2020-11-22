@@ -19,8 +19,14 @@ var upload = multer({ storage: _storage });
 
 var countApplicantId = 2; // count applicant num
 var countEnterId = 2; // count enterprise num
-const users = [{ name: "123", password: "123" }]; // Login users
-const enterprises = [{ name: "456", password: "456" }]; // Login enterprises
+const users = [
+  { name: "123", password: "123" },
+  { name: "535", password: "325" },
+]; // Login users
+const enterprises = [
+  { name: "456", password: "456" },
+  { name: "789", password: "789" },
+]; // Login enterprises
 const applicantList = [
   {
     applicantName: "sample2",
@@ -42,7 +48,7 @@ const applicantList = [
     applicantPhoneNumber: "01014458250",
     applicantIntroduce: "my name is ...",
     name: "486",
-    password: "45858",
+    password: "486",
     image: "/img/Study.jpg",
     id: 1,
   },
@@ -110,11 +116,24 @@ const enterList = [
     enterpriseInformation3: "1025명",
     enterpriseInformation4: "중견기업",
     enterpriseInformation5: "5080억",
-    name: "636",
-    password: "636",
+    name: "789",
+    password: "789",
     image: "/img/hanwha.png",
     enterpriseDetailImg: "/img/capture.png",
-    enterpriseApplicant: [],
+    enterpriseApplicant: [
+      {
+        applicantName: "sample2",
+        applicantGender: "male",
+        applicantBirthday: "2020-11-23",
+        applicantEmail: "huhjb1020@naver.com",
+        applicantPhoneNumber: "01038468250",
+        applicantIntroduce: "my name is ...",
+        name: "535",
+        password: "325",
+        image: "/img/Study.jpg",
+        id: 0,
+      },
+    ],
     id: 1,
   },
 ];
