@@ -106,6 +106,12 @@ section {
 }
 
 /* Banner */
+.main-text {
+    margin-bottom: 50px;
+    color: #535ba0;
+    font-size: 38px;
+}
+
 .main-banner .container-fluid {
 	padding-left: 0px;
 	padding-right: 0px;
@@ -1198,7 +1204,7 @@ section.buttons .container-fluid {
     display: flex;
     position: relative;
     background-color: #535ba0;
-    margin: -100px -100px 100px -100px;
+    margin: -100px -100px 50px -100px;
 }
 
 #header .logo {

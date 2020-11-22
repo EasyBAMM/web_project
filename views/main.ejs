@@ -41,7 +41,7 @@ https://templatemo.com/tm-529-ramayana
             <a href="/">JJob Korea</a>
           </div>
         </header>
-
+        <p class="main-text"><%= mainText %></p>
         <!-- Banner -->
         <section class="main-banner">
           <div class="container-fluid">
@@ -78,12 +78,13 @@ https://templatemo.com/tm-529-ramayana
                   </div>
                   <div class="support-company">
                     <div class="cmp-list">
-                    <% for (var i=0;i<enterList.length; i++) { %>
+                      <% for (var i=0;i<enterList.length; i++) { %>
                       <div class="cmp">
-                        <a href="/enterprise-detail/<%= enterList[i].id %>"><img src=<%= enterList[i].image %> class="company-img"></a>
+                        <a href="/enterprise-detail/<%= enterList[i].id %>"><img src=<%= enterList[i].image %>
+                            class="company-img"></a>
                         <p class="company-name"><%= enterList[i].enterpriseTitle %></p>
                       </div>
-                    <% } %>
+                      <% } %>
                     </div>
                     <!-- <div class="cmp-list">
                       <div class="cmp">

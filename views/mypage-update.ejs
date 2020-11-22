@@ -23,7 +23,8 @@
                         <input type="file" id="image" name="image" accept="image/jpeg" required><br><br>
 
                         <label for="applicantName">ㆍName</label>
-                        <input type="text" id="applicantName" name="applicantName" placeholder="name.." required>
+                        <input type="text" id="applicantName" name="applicantName" placeholder="name.."
+                            value="<%= applicantList.applicantName %>" required>
 
                         <label for="applicantGender">ㆍGender</label>
                         <select id="applicantGender" name="applicantGender">
@@ -33,18 +34,20 @@
                         </select>
                         <label for="applicantBirthday">ㆍBirth</label><br><br>
                         <input type="date" id="applicantBirthday" name="applicantBirthday" placeholder="Birth"
-                            required><br><br>
+                            value="<%= applicantList.applicantBirthday %>" required><br><br>
 
                         <label for="applicantEmail">ㆍEmail</label>
-                        <input type="text" id="applicantEmail" name="applicantEmail" placeholder="e-mail.." required>
+                        <input type="text" id="applicantEmail" name="applicantEmail" placeholder="e-mail.."
+                            value="<%= applicantList.applicantEmail %>" required>
 
                         <label for="applicantPhoneNumber">ㆍPhone Number</label>
                         <input type="text" id="applicantPhoneNumber" name="applicantPhoneNumber"
-                            placeholder="phone number.." required>
+                            placeholder="phone number.." value="<%= applicantList.applicantPhoneNumber %>" required>
 
                         <label for="applicantIntroduce">ㆍSelf-Introduction</label>
                         <textarea class="textarea" name="applicantIntroduce" id="applicantIntroduce"
-                            placeholder="Let me introduce myself" cols="30" rows="10" required></textarea>
+                            placeholder="Let me introduce myself" cols="30" rows="10"
+                            required><%= applicantList.applicantIntroduce %></textarea>
                         <!-- <input type="text" id="applicantIntroduce" name="applicantIntroduce"
                             placeholder="let me introduce myself" style="height: 300px;"> -->
 

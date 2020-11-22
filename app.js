@@ -1,71 +1,99 @@
-var createError = require('http-errors');
-var express = require('express');
+var createError = require("http-errors");
+var express = require("express");
 var router = express.Router();
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var session = require('express-session');
-var FileStore = require('session-file-store')(session);
-var multer = require('multer');
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
+var session = require("express-session");
+var FileStore = require("session-file-store")(session);
+var multer = require("multer");
 var _storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, 'public/img/')
+  destination: function (req, file, cb) {
+    cb(null, "public/img/");
   },
-  filename: function(req, file, cb) {
-    cb(null, file.originalname)
-  }
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
 });
-var upload = multer({storage: _storage})
+var upload = multer({ storage: _storage });
 
-var countId = 2;
-const users = []
-const enterprises = [];
-var enterList = [
+var countApplicantId = 2; // count applicant num
+var countEnterId = 2; // count enterprise num
+const users = []; // Login users
+const enterprises = []; // Login enterprises
+const applicantList = [
   {
-    enterpriseName: '(주)카카오',
-    enterpriseTitle: "kakao 채용공고",
-    enterpriseQualificationAge: '신입',
-    enterpriseQualificationGraduate: '대졸이상(졸업예정자가능)',
-    enterpriseHired: '계약직',
-    enterpriseMoney: '회사내규에따름',
-    enterpriseLocation: '서울시 서초구',
-    enterpriseTime: '주5일(월~금)',
-    enterpriseDetailOption: '1. 지원동기 2. 성장과정',
-    enterpriseInformation1: '앱 서비스 개발',
-    enterpriseInformation2: '2010년',
-    enterpriseInformation3: '10024명',
-    enterpriseInformation4: 'IT대기업',
-    enterpriseInformation5: '1조8000억',
-    name: '456',
-    password: '456',
-    image: "/img/Kakao.png",
-    enterpriseDetailImg: '/img/capture.png',
+    applicantName: "heojunbeom",
+    applicantGender: "male",
+    applicantBirthday: "2020-11-23",
+    applicantEmail: "huhjb1020@naver.com",
+    applicantPhoneNumber: "01038468250",
+    applicantIntroduce: "my name is ...",
+    name: "535",
+    password: "325",
+    image: "/img/Study.jpg",
     id: 0,
   },
   {
-    enterpriseName: '(주)한화',
-    enterpriseTitle: "hanwha 채용공고",
-    enterpriseQualificationAge: '신입',
-    enterpriseQualificationGraduate: '대졸이상(졸업예정자가능)',
-    enterpriseHired: '일용직',
-    enterpriseMoney: '회사내규에 따름',
-    enterpriseLocation: '서울시 양천구',
-    enterpriseTime: '주5일(월~금)',
-    enterpriseDetailOption: '1. 지원동기 2. 성장과정',
-    enterpriseInformation1: '게임 애니메이션',
-    enterpriseInformation2: '1988년',
-    enterpriseInformation3: '1025명',
-    enterpriseInformation4: '중견기업',
-    enterpriseInformation5: '5080억',
-    name: '644',
-    password: '636',
-    image: "/img/hanwha.png",
-    enterpriseDetailImg: '/img/capture.png',
+    applicantName: "helloworld",
+    applicantGender: "female",
+    applicantBirthday: "2020-11-23",
+    applicantEmail: "helloworld@naver.com",
+    applicantPhoneNumber: "01014458250",
+    applicantIntroduce: "my name is ...",
+    name: "486",
+    password: "45858",
+    image: "/img/Study.jpg",
     id: 1,
-  }
-]
-var isWrong = false;
-var isWrongText = "";
+  },
+];
+const enterList = [
+  {
+    enterpriseName: "(주)카카오",
+    enterpriseTitle: "kakao 채용공고",
+    enterpriseQualificationAge: "신입",
+    enterpriseQualificationGraduate: "대졸이상(졸업예정자가능)",
+    enterpriseHired: "계약직",
+    enterpriseMoney: "회사내규에따름",
+    enterpriseLocation: "서울시 서초구",
+    enterpriseTime: "주5일(월~금)",
+    enterpriseDetailOption: "1. 지원동기 2. 성장과정",
+    enterpriseInformation1: "앱 서비스 개발",
+    enterpriseInformation2: "2010년",
+    enterpriseInformation3: "10024명",
+    enterpriseInformation4: "IT대기업",
+    enterpriseInformation5: "1조8000억",
+    name: "456",
+    password: "456",
+    image: "/img/Kakao.png",
+    enterpriseDetailImg: "/img/capture.png",
+    id: 0,
+  },
+  {
+    enterpriseName: "(주)한화",
+    enterpriseTitle: "hanwha 채용공고",
+    enterpriseQualificationAge: "신입",
+    enterpriseQualificationGraduate: "대졸이상(졸업예정자가능)",
+    enterpriseHired: "일용직",
+    enterpriseMoney: "회사내규에 따름",
+    enterpriseLocation: "서울시 양천구",
+    enterpriseTime: "주5일(월~금)",
+    enterpriseDetailOption: "1. 지원동기 2. 성장과정",
+    enterpriseInformation1: "게임 애니메이션",
+    enterpriseInformation2: "1988년",
+    enterpriseInformation3: "1025명",
+    enterpriseInformation4: "중견기업",
+    enterpriseInformation5: "5080억",
+    name: "644",
+    password: "636",
+    image: "/img/hanwha.png",
+    enterpriseDetailImg: "/img/capture.png",
+    id: 1,
+  },
+];
+var mainText = "Welcome."; // main status text
+var isWrong = false; // login check
+var isWrongText = ""; // login check text
 
 /*
 var indexRouter = require('./routes/index');
@@ -76,252 +104,359 @@ app.use('/users', usersRouter);
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use(session({
-  secret: 'asdlgkgfk',
-  resave: false,
-  saveUninitialized: true,
-  store: new FileStore()
-}));
+app.use(
+  session({
+    secret: "asdlgkgfk",
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore(),
+  })
+);
 
 /* GET home page. */
-app.get('/', function(req, res, next) {
-  if(req.session.is_logined) {
+app.get("/", function (req, res, next) {
+  if (req.session.is_logined) {
     // login-on
-    if(req.session.is_type) {
-      res.render('main', { name: req.session.name, signLink:"/logout", sign: "Log-out", direct: "/mypage", enterList: enterList });
+    if (req.session.is_type) {
+      res.render("main", {
+        name: req.session.name,
+        signLink: "/logout",
+        sign: "Log-out",
+        direct: "/mypage",
+        enterList: enterList,
+        mainText: mainText,
+      });
+    } else {
+      res.render("main", {
+        name: req.session.name,
+        signLink: "/logout",
+        sign: "Log-out",
+        direct: "/enterprise",
+        enterList: enterList,
+        mainText: mainText,
+      });
     }
-    else {
-      res.render('main', { name: req.session.name, signLink:"/logout", sign: "Log-out", direct: "/enterprise", enterList: enterList });
-    }
-  }
-  else {
+  } else {
     // login-off
-    res.render('main', { name: "", signLink:"/login", sign: "Log-in", direct:"", enterList: enterList });
+    res.render("main", {
+      name: "",
+      signLink: "/login",
+      sign: "Log-in",
+      direct: "",
+      enterList: enterList,
+      mainText: mainText,
+    });
   }
 });
 
 /* GET login page. */
-app.get('/login', function(req, res, next) {
-  res.render('login', { message: isWrong, text: isWrongText });
+app.get("/login", function (req, res, next) {
+  res.render("login", { message: isWrong, text: isWrongText });
 });
 
 /* GET login_process page. */
-app.post('/login', function(req, res, next) {
+app.post("/login", function (req, res, next) {
   var name = req.body.name;
   var password = req.body.password;
   var dbType = req.body.DB_Type;
 
-  if(dbType === "type1") {
-    for(i=0;i<users.length;i++) {
-      if(name === users[i].name && password === users[i].password){
+  if (dbType === "type1") {
+    for (i = 0; i < users.length; i++) {
+      if (name === users[i].name && password === users[i].password) {
         // success!
         req.session.is_logined = true;
         req.session.is_type = true;
         req.session.name = name;
         req.session.password = password;
-        req.session.save(function(){
-          res.redirect('/');
+        req.session.save(function () {
+          mainText = "Welcome " + req.session.name + ".";
+          res.redirect("/");
         });
         return true;
       }
     }
-  }
-  else if(dbType === "type2") {
-    for(i=0;i<enterprises.length;i++) {
-      if(name === enterprises[i].name && password === enterprises[i].password){
+  } else if (dbType === "type2") {
+    for (i = 0; i < enterprises.length; i++) {
+      if (
+        name === enterprises[i].name &&
+        password === enterprises[i].password
+      ) {
         // success!
         req.session.is_logined = true;
         req.session.is_type = false;
         req.session.name = name;
         req.session.password = password;
-        req.session.save(function(){
-          res.redirect('/');
+        req.session.save(function () {
+          mainText = "Welcome " + req.session.name + ".";
+          res.redirect("/");
         });
         return true;
       }
     }
   }
-  
+
   // wrong!
   isWrong = true;
   isWrongText = "잘못된 정보가 입력되었습니다.";
-  res.redirect('/login');
+  res.redirect("/login");
 });
 
 /* GET logout page. */
-app.get('/logout', function(req, res, next) {
-  req.session.destroy(function(err){
-    res.redirect('/');
+app.get("/logout", function (req, res, next) {
+  req.session.destroy(function (err) {
+    mainText = "Welcome.";
+    res.redirect("/");
   });
 });
 
 /* GET register page. */
-app.get('/register', function(req, res, next) {
-  res.render('register.ejs');
+app.get("/register", function (req, res, next) {
+  res.render("register.ejs");
 });
 
 /* POST register page. */
-app.post('/register', function(req, res, next) {
+app.post("/register", function (req, res, next) {
   try {
-    if(req.body.DB_Type === "type1") {
+    if (req.body.DB_Type === "type1") {
       users.push({
         name: req.body.name,
-        password: req.body.password
-      })
-    }
-    else if(req.body.DB_Type === "type2") {
+        password: req.body.password,
+      });
+    } else if (req.body.DB_Type === "type2") {
       enterprises.push({
         name: req.body.name,
-        password: req.body.password
-      })
+        password: req.body.password,
+      });
     }
-    
+
+    // wrong!
+    isWrong = true;
     isWrongText = "다시 로그인해주세요.";
-    res.redirect('/login');
+    res.redirect("/login");
   } catch {
-    res.redirect('/register');
+    res.redirect("/register");
   }
 });
 
 /* GET enterprise page. */
-app.get('/enterprise', function(req, res, next) {
-  if(req.session.is_logined && req.session.is_type === false) {
-    res.render('enterprise', { title: 'Express' });
-  }
-  else {
-    res.redirect('/');
+app.get("/enterprise", function (req, res, next) {
+  if (req.session.is_logined && req.session.is_type === false) {
+    res.render("enterprise", { title: "Express" });
+  } else {
+    mainText = "Access denied";
+    res.redirect("/");
   }
 });
 
 /* POST enterprise page. */
-app.post('/enterprise', upload.fields([{name:'image'}, {name:'enterpriseDetailImg'}]), function(req, res, next) {
-  const obj = JSON.parse(JSON.stringify(req.body));
-  obj.name = req.session.name;
-  obj.password = req.session.password;
-  obj.image = "/img/" + req.files['image'][0].filename;
-  obj.enterpriseDetailImg = "/img/" + req.files['enterpriseDetailImg'][0].filename;
-  obj.id = countId;
-  countId+=1;
-  try{
-    enterList.push(obj);
-    console.log(enterList);
-    res.redirect('/');
-  } catch {
-    res.redirect('/enterprise');
-  }
-});
-
-/* GET enterprise-detail page. */
-app.get('/enterprise-detail/:id', function(req, res, next) {
-  for(var i=0;i<enterList.length;i++) {
-    if(enterList[i].id == req.params.id) {
-      req.session.current_url = '/enterprise-detail/' + req.params.id;
-      return res.render('enterprise-detail', {enterList: enterList[i]});
+app.post(
+  "/enterprise",
+  upload.fields([{ name: "image" }, { name: "enterpriseDetailImg" }]),
+  function (req, res, next) {
+    const obj = JSON.parse(JSON.stringify(req.body));
+    obj.name = req.session.name;
+    obj.password = req.session.password;
+    obj.image = "/img/" + req.files["image"][0].filename;
+    obj.enterpriseDetailImg =
+      "/img/" + req.files["enterpriseDetailImg"][0].filename;
+    obj.id = countEnterId;
+    countEnterId += 1;
+    try {
+      enterList.push(obj);
+      console.log(enterList);
+      mainText = "Registration success";
+      res.redirect("/");
+    } catch {
+      res.redirect("/enterprise");
     }
   }
-  res.redirect('/');
+);
+
+/* GET enterprise-detail page. */
+app.get("/enterprise-detail/:id", function (req, res, next) {
+  for (var i = 0; i < enterList.length; i++) {
+    if (enterList[i].id == req.params.id) {
+      req.session.current_url = "/enterprise-detail/" + req.params.id;
+      return res.render("enterprise-detail", { enterList: enterList[i] });
+    }
+  }
+
+  mainText = "Access denied";
+  res.redirect("/");
 });
 
-
 /* POST enterprise-update page. */
-app.post('/enterprise-update/:id', function(req, res, next) {
-  if(req.session.is_logined === true && req.session.is_type === false) {
-    for(var i=0; i<enterList.length; i++) {
-      if(enterList[i].id == req.body.id && enterList[i].name == req.session.name && enterList[i].password == req.session.password) {
-          return res.render('enterprise-update', {enterList: enterList[i]});
+app.post("/enterprise-update/:id", function (req, res, next) {
+  if (req.session.is_logined === true && req.session.is_type === false) {
+    for (var i = 0; i < enterList.length; i++) {
+      if (
+        enterList[i].id == req.body.id &&
+        enterList[i].name == req.session.name &&
+        enterList[i].password == req.session.password
+      ) {
+        return res.render("enterprise-update", { enterList: enterList[i] });
       }
     }
   }
-  res.redirect(req.session.current_url);
+  mainText = "Access denied";
+  res.redirect("/");
 });
 
 /* POST enterprise-update page. */
-app.post('/enterprise-updating', upload.fields([{name:'image'}, {name:'enterpriseDetailImg'}]), function(req, res, next) {
-  if(req.session.is_logined === true && req.session.is_type === false) {
-    for(var i=0; i<enterList.length; i++) {
-      if(enterList[i].id == req.body.id && enterList[i].name == req.session.name && enterList[i].password == req.session.password) {
+app.post(
+  "/enterprise-updating",
+  upload.fields([{ name: "image" }, { name: "enterpriseDetailImg" }]),
+  function (req, res, next) {
+    if (req.session.is_logined === true && req.session.is_type === false) {
+      for (var i = 0; i < enterList.length; i++) {
+        if (
+          enterList[i].id == req.body.id &&
+          enterList[i].name == req.session.name &&
+          enterList[i].password == req.session.password
+        ) {
           const obj = JSON.parse(JSON.stringify(req.body));
           obj.name = req.session.name;
           obj.password = req.session.password;
-          obj.image = "/img/" + req.files['image'][0].filename;
-          obj.enterpriseDetailImg = "/img/" + req.files['enterpriseDetailImg'][0].filename;
-          console.log(obj);
+          obj.image = "/img/" + req.files["image"][0].filename;
+          obj.enterpriseDetailImg =
+            "/img/" + req.files["enterpriseDetailImg"][0].filename;
+          obj.id = enterList[i].id;
           try {
             enterList[i] = obj;
             console.log(enterList);
+            mainText = "Registration Update success";
             return res.redirect(req.session.current_url);
           } catch {
             console.log("err");
+            mainText = "Registration Update fail";
             return res.redirect(req.session.current_url);
           }
+        }
       }
     }
+    console.log("else");
+    res.redirect(req.session.current_url);
   }
-  console.log("else");
-  res.redirect(req.session.current_url);
-});
+);
 
 /* POST enterprise-delete page. */
-app.post('/enterprise-delete', function(req, res, next) {
-  if(req.session.is_logined === true && req.session.is_type === false) {
-    for(var i=0; i<enterList.length; i++) {
-      if(enterList[i].id == req.body.id && enterList[i].name == req.session.name && enterList[i].password == req.session.password) {
-          try {
-            // delete enterList[i];
-            // enterList.splice();
-            console.log(enterList);
-            return res.redirect('/');
-          } catch {
-            console.log("err");
-            return res.redirect(req.session.current_url);
-          }
+app.post("/enterprise-delete", function (req, res, next) {
+  if (req.session.is_logined === true && req.session.is_type === false) {
+    for (var i = 0; i < enterList.length; i++) {
+      if (
+        enterList[i].id == req.body.id &&
+        enterList[i].name == req.session.name &&
+        enterList[i].password == req.session.password
+      ) {
+        try {
+          enterList.pop(i);
+          console.log(enterList);
+          mainText = "Delete success";
+          return res.redirect("/");
+        } catch {
+          console.log("err");
+          return res.redirect(req.session.current_url);
+        }
       }
     }
   }
   console.log("else");
-  res.redirect(req.session.current_url);
+  mainText = "Access denied";
+  res.redirect("/");
 });
 
 /* GET mypage page. */
-app.get('/mypage', function(req, res, next) {
-  if(req.session.is_logined && req.session.is_type) {
-    res.render('mypage', { title: 'Express' });
+app.get("/mypage", function (req, res, next) {
+  if (req.session.is_logined && req.session.is_type) {
+    // check login & type
+    for (var i = 0; i < applicantList.length; i++) {
+      if (
+        applicantList[i].name == req.session.name &&
+        applicantList[i].password == req.session.password
+      ) {
+        // already save profile
+        return res.render("mypage-update", { applicantList: applicantList[i] });
+      }
+    }
+    return res.render("mypage");
   }
-  else {
-    res.redirect('/');
-  }
+  mainText = "Access denied";
+  res.redirect("/");
 });
 
-
+/* POST mypage page. */
+app.post(
+  "/mypage",
+  upload.fields([{ name: "image" }]),
+  function (req, res, next) {
+    for (var i = 0; i < applicantList.length; i++) {
+      if (
+        applicantList[i].name == req.session.name &&
+        applicantList[i].password == req.session.password
+      ) {
+        // already save profile
+        const obj = JSON.parse(JSON.stringify(req.body));
+        obj.name = req.session.name;
+        obj.password = req.session.password;
+        obj.image = "/img/" + req.files["image"][0].filename;
+        obj.id = applicantList[i].id;
+        try {
+          applicantList[i] = obj;
+          console.log(applicantList);
+          mainText = "Profile Update success";
+          return res.redirect("/");
+        } catch {
+          console.log("err");
+          mainText = "Profile Update fail";
+          return res.redirect("/");
+        }
+      }
+    }
+    const obj = JSON.parse(JSON.stringify(req.body));
+    obj.name = req.session.name;
+    obj.password = req.session.password;
+    obj.image = "/img/" + req.files["image"][0].filename;
+    obj.id = countApplicantId;
+    countApplicantId += 1;
+    try {
+      applicantList.push(obj);
+      console.log(applicantList);
+      mainText = "Profile save success";
+      res.redirect("/");
+    } catch {
+      res.redirect("/mypage");
+    }
+  }
+);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 module.exports = app;
 
-const port = 3000
+const port = 3000;
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+  console.log(`Example app listening at http://localhost:${port}`);
+});
