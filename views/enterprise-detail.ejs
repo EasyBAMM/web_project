@@ -13,14 +13,16 @@
     <div class="container">
         <div class="section1">
             <header>
-                <a href="/" class="header-a"><p class="section1-title">JJOPKOREA</p></a>
+                <a href="/" class="header-a">
+                    <p class="section1-title">JJOPKOREA</p>
+                </a>
                 <div class="header-buttons">
                     <form action="/enterprise-update/<%= enterList.id %>" method="POST">
                         <input type="hidden" name="id" value=<%= enterList.id %>>
                         <button type="submit" class="header-update">UPDATE</button>
                     </form>
                     <form action="/enterprise-delete" method="POST">
-                        <input type="hidden" name="id" value=<%= enterList.id %>>
+                        <input type="hidden" name="id" value="<%= enterList.id %>">
                         <button type="submit" class="header-delete">DELETE</button>
                     </form>
                 </div>
@@ -99,7 +101,10 @@
                 </div>
                 <div class="main-button-section">
                     <div class="main-button-wrap">
-                        <input class="main-button" type="button" value="홈페이지 지원">
+                        <form class="form-apply" action="/enterprise-apply" method="POST">
+                            <input type="hidden" name="id" value=<%= enterList.id %>>
+                            <button type="submit" class="main-button">지원하기</button>
+                        </form>
                     </div>
                 </div>
                 <div id="main-img" class="main-img-section">
@@ -149,7 +154,7 @@
                                     <p class="detail-right-title-text"><%= enterList.enterpriseName %></p>
                                 </div>
                             </div>
-                            <di class="main-detail-right-body">
+                            <div class="main-detail-right-body">
                                 <div class="main-right-body-left">
                                     <div class="body-row">
                                         <p class="row-title">산업</p>
@@ -178,7 +183,7 @@
                                         <p class="row-body"><%= enterList.enterpriseInformation5 %></p>
                                     </div>
                                 </div>
-                            </di>
+                            </div>
                         </div>
                     </div>
                 </div>

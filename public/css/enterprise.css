@@ -109,8 +109,11 @@ main {
     outline: none;
     border: none;
     border-radius: 0.3em;
+    cursor: pointer;
 }
-
+#button-check-applicant:hover {
+    background-color: rgb(48, 142, 199);
+}
 #button-goback {
     margin-right: 2%;
     background-color: rgb(224,224,224);
@@ -118,6 +121,10 @@ main {
     outline: none;
     border: none;
     border-radius: 0.3em;
+    cursor: pointer;
+}
+#button-goback:hover {
+    background-color: rgb(224,224,194);
 }
 
 #button-submit {
@@ -126,8 +133,28 @@ main {
     outline: none;
     border: none;
     border-radius: 0.3em;
-    
+    cursor: pointer;
 }
+#button-submit:hover {
+    background-color: rgb(94,94,64);
+}
+
+/* input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+} */
+
+
 
 label {
     display: inline-block;

@@ -19,11 +19,11 @@ var upload = multer({ storage: _storage });
 
 var countApplicantId = 2; // count applicant num
 var countEnterId = 2; // count enterprise num
-const users = []; // Login users
-const enterprises = []; // Login enterprises
+const users = [{ name: "123", password: "123" }]; // Login users
+const enterprises = [{ name: "456", password: "456" }]; // Login enterprises
 const applicantList = [
   {
-    applicantName: "heojunbeom",
+    applicantName: "sample2",
     applicantGender: "male",
     applicantBirthday: "2020-11-23",
     applicantEmail: "huhjb1020@naver.com",
@@ -67,6 +67,32 @@ const enterList = [
     password: "456",
     image: "/img/Kakao.png",
     enterpriseDetailImg: "/img/capture.png",
+    enterpriseApplicant: [
+      {
+        applicantName: "sample2",
+        applicantGender: "male",
+        applicantBirthday: "2020-11-23",
+        applicantEmail: "huhjb1020@naver.com",
+        applicantPhoneNumber: "01038468250",
+        applicantIntroduce: "my name is ...",
+        name: "535",
+        password: "325",
+        image: "/img/Study.jpg",
+        id: 0,
+      },
+      {
+        applicantName: "helloworld",
+        applicantGender: "female",
+        applicantBirthday: "2020-11-23",
+        applicantEmail: "helloworld@naver.com",
+        applicantPhoneNumber: "01014458250",
+        applicantIntroduce: "my name is ...",
+        name: "486",
+        password: "45858",
+        image: "/img/dog.jpg",
+        id: 1,
+      },
+    ],
     id: 0,
   },
   {
@@ -84,10 +110,11 @@ const enterList = [
     enterpriseInformation3: "1025명",
     enterpriseInformation4: "중견기업",
     enterpriseInformation5: "5080억",
-    name: "644",
+    name: "636",
     password: "636",
     image: "/img/hanwha.png",
     enterpriseDetailImg: "/img/capture.png",
+    enterpriseApplicant: [],
     id: 1,
   },
 ];
@@ -227,30 +254,47 @@ app.get("/register", function (req, res, next) {
 app.post("/register", function (req, res, next) {
   try {
     if (req.body.DB_Type === "type1") {
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].name == req.body.name) {
+          // same name
+          throw new Error("동일한 ID가 이미 등록되어있습니다.");
+        }
+      }
       users.push({
         name: req.body.name,
         password: req.body.password,
       });
+      console.log(users);
     } else if (req.body.DB_Type === "type2") {
+      for (var i = 0; i < enterprises.length; i++) {
+        if (enterprises[i].name == req.body.name) {
+          // same name
+          throw new Error("동일한 ID가 이미 등록되어있습니다.");
+        }
+      }
       enterprises.push({
         name: req.body.name,
         password: req.body.password,
       });
+      console.log(enterprises);
     }
 
     // wrong!
     isWrong = true;
     isWrongText = "다시 로그인해주세요.";
     res.redirect("/login");
-  } catch {
-    res.redirect("/register");
+  } catch (err) {
+    // wrong!
+    isWrong = true;
+    isWrongText = err.name + " : " + err.message;
+    res.redirect("/login");
   }
 });
 
 /* GET enterprise page. */
 app.get("/enterprise", function (req, res, next) {
   if (req.session.is_logined && req.session.is_type === false) {
-    res.render("enterprise", { title: "Express" });
+    res.render("enterprise");
   } else {
     mainText = "Access denied";
     res.redirect("/");
@@ -268,6 +312,7 @@ app.post(
     obj.image = "/img/" + req.files["image"][0].filename;
     obj.enterpriseDetailImg =
       "/img/" + req.files["enterpriseDetailImg"][0].filename;
+    obj.enterpriseApplicant = [];
     obj.id = countEnterId;
     countEnterId += 1;
     try {
@@ -329,6 +374,7 @@ app.post(
           obj.image = "/img/" + req.files["image"][0].filename;
           obj.enterpriseDetailImg =
             "/img/" + req.files["enterpriseDetailImg"][0].filename;
+          obj.enterpriseApplicant = enterList[i].enterpriseApplicant;
           obj.id = enterList[i].id;
           try {
             enterList[i] = obj;
@@ -365,6 +411,65 @@ app.post("/enterprise-delete", function (req, res, next) {
         } catch {
           console.log("err");
           return res.redirect(req.session.current_url);
+        }
+      }
+    }
+  }
+  console.log("else");
+  mainText = "Access denied";
+  res.redirect("/");
+});
+
+/* POST enterprise-apply page. */
+app.post("/enterprise-apply", function (req, res, next) {
+  if (req.session.is_logined && req.session.is_type) {
+    for (var i = 0; i < applicantList.length; i++) {
+      console.log(applicantList[i].name + " : " + req.session.name);
+      if (
+        applicantList[i].name == req.session.name &&
+        applicantList[i].password == req.session.password
+      ) {
+        // already applicant save
+        for (var j = 0; j < enterList.length; j++) {
+          if (enterList[j].id == req.body.id) {
+            try {
+              console.log(enterList[j]);
+              enterList[j].enterpriseApplicant.push(applicantList[i]);
+              console.log(enterList[j]);
+              mainText = "Apply success";
+              return res.redirect("/");
+            } catch {
+              mainText = "Apply fail";
+              return res.redirect("/");
+            }
+          }
+        }
+      }
+    }
+    mainText = "Apply fail, Before writing mypage";
+    return res.redirect("/");
+  }
+  console.log("else");
+  mainText = "Access denied";
+  res.redirect("/");
+});
+
+/* POST enterprise-applicant page. */
+app.post("/enterprise-applicant", function (req, res, next) {
+  if (req.session.is_logined === true && req.session.is_type === false) {
+    for (var i = 0; i < enterList.length; i++) {
+      if (
+        enterList[i].name == req.session.name &&
+        enterList[i].password == req.session.password
+      ) {
+        try {
+          return res.render("enterprise-applicant", {
+            enterList: enterList[i],
+          });
+        } catch {
+          console.log("err");
+          mainText = "Applicant Access denied";
+          return res.redirect("/");
         }
       }
     }
@@ -421,6 +526,7 @@ app.post(
         }
       }
     }
+    // initial save profile
     const obj = JSON.parse(JSON.stringify(req.body));
     obj.name = req.session.name;
     obj.password = req.session.password;

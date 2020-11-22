@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지원자 확인 페이지</title>
+    <link rel="stylesheet" href="/css/enterprise-applicant.css">
+</head>
+
+<body>
+    <div class="section1">
+        <header>
+            <div class="header-0">
+                <img class="enterprise-img" src="<%= enterList.image %>" alt="enterprise-img">
+                <p class="enterprise-name"><%= enterList.enterpriseName %></p>
+            </div>
+            <div class="header-1">
+                <p class="page-title">지원자 현황</p>
+            </div>
+        </header>
+    </div>
+    <div class="section2">
+        <% for (var i=0;i<enterList.enterpriseApplicant.length; i++) { %>
+        <div class="applicant-wrap">
+            <div class="applicant-0">
+                <img class="applicant-img" src="<%= enterList.enterpriseApplicant[i].image %>" alt="applicant-img">
+                <p class="applicant-text-id">ID Photo</p>
+            </div>
+            <div class="applicant-1">
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-name">Name</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-gender">Gender</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-birthday">Birth</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-email">E-mail</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-phonenumber">Phone Number</p>
+                </div>
+                <div class="applicant-p-wrap applicant-p-wrap-no">
+                    <p class="applicant-text-introduce">Self-Introduction</p>
+                </div>
+            </div>
+            <div class="applicant-2">
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-name"><%= enterList.enterpriseApplicant[i].applicantName %></p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-gender"><%= enterList.enterpriseApplicant[i].applicantGender %></p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-birthday"><%= enterList.enterpriseApplicant[i].applicantBirthday %></p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-email"><%= enterList.enterpriseApplicant[i].applicantEmail %></p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-phonenumber"><%= enterList.enterpriseApplicant[i].applicantPhoneNumber %></p>
+                </div>
+                <div class="applicant-p-wrap2 applicant-p-wrap2-no">
+                    <textarea class="applicant-introduce" name=""
+                        id=""><%= enterList.enterpriseApplicant[i].applicantIntroduce %></textarea>
+                </div>
+            </div>
+        </div>
+        <% } %>
+        <!-- <div class="applicant-wrap">
+            <div class="applicant-0">
+                <img class="applicant-img" src="/img/justdoit.jpg" alt="">
+                <p class="applicant-text-id">ID Photo</p>
+            </div>
+            <div class="applicant-1">
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-name">Name</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-gender">Gender</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-birthday">Birth</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-email">E-mail</p>
+                </div>
+                <div class="applicant-p-wrap">
+                    <p class="applicant-text-phonenumber">Phone Number</p>
+                </div>
+                <div class="applicant-p-wrap applicant-p-wrap-no">
+                    <p class="applicant-text-introduce">Self-Introduction</p>
+                </div>
+            </div>
+            <div class="applicant-2">
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-name">heojunbeom</p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-gender">male</p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-birthday">1997-10-20</p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-email">huhjb1020@naver.com</p>
+                </div>
+                <div class="applicant-p-wrap2">
+                    <p class="applicant-phonenumber">010384688250</p>
+                </div>
+                <div class="applicant-p-wrap2 applicant-p-wrap2-no">
+                    <textarea class="applicant-introduce" name="" id="">my name is</textarea>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="section3">
+
+    </div>
+</body>
+
+</html>

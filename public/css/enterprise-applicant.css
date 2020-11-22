@@ -1,0 +1,135 @@
+html, body {
+    margin: 0;
+}
+
+/* .section1 */
+.section1 {
+    width: 100%;
+    height: 150px;
+    padding-top: 40px;
+}
+
+header {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.header-0 {
+    display: flex;
+    width: 100%;
+    height: 50%;
+}
+
+.enterprise-img {
+    width: 90px;
+    height: 90px;
+}
+.enterprise-name {
+    text-align: center;
+    align-self: center;
+    margin-left: 10px;
+    font-weight: 600;
+    margin-top: 0;
+    letter-spacing: 8px;
+}
+.header-1 {
+    width: 100%;
+    height: 50%;
+}
+.page-title {
+    text-align: center;
+    font-size: 3em;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0;
+    letter-spacing: 10px;
+}
+
+/* .section2 */
+.section2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.applicant-wrap {
+    width: 1000px;
+    height: 300px;
+    display: flex;
+    border: 3px double black;
+    margin-top: 30px;
+}
+
+.applicant-0 {
+    width: 210px;
+    height: 300px;
+}
+
+.applicant-img {
+    width: 210px;
+    height: 270px;
+    border-bottom: 3px double black;
+}
+.applicant-text-id {
+    margin: 0;
+    text-align: center;
+}
+
+.applicant-1 {
+    width: 150px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.applicant-p-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px double black;
+    border-left: 3px double black;
+    border-right: 3px double black;
+    height: calc(300px / 6);
+}
+.applicant-p-wrap-no {
+    border-bottom: 0;
+}
+.applicant-1 p {
+    margin: 0;
+}
+
+.applicant-2 {
+    width: calc(1000px - 210px - 150px);
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.applicant-p-wrap2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px double black;
+    height: calc(300px / 6);
+}
+.applicant-p-wrap2-no {
+    border-bottom: 0;
+}
+.applicant-2 p {
+    margin: 0;
+    width: 95%;
+}
+.applicant-introduce {
+    width: 95%;
+    height: 80%;
+    border: 0;
+}
+
+
+/* .section3 */
+.section3 {
+    width: 100%;
+    height: 40px;
+}
