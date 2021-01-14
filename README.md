@@ -6,3 +6,6 @@
 3. npm install
 4. node app.js
 ```
+
+#### youtube 링크
+https://youtu.be/VKUFfO9Hfp8
